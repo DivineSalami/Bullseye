@@ -25,8 +25,14 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         currentValue = Int(slider.value.rounded())
-        startNewRound()
+       // startNewRound()
+        restartGame()
         
+        let thumbImageNormal = #imageLiteral(resourceName: "SliderThumb-Highlighted")
+        slider.setThumbImage(thumbImageNormal, for: .normal)
+        
+        let thumbImageHighlghted = #imageLiteral(resourceName: "SliderThumb-Highlighted")
+        slider.setThumbImage(thumbImageHighlghted, for: .highlighted)
         
         // Do any additional setup after loading the view.
     }
@@ -44,23 +50,28 @@ class ViewController: UIViewController {
             title = "Ok"
         } else if difference < 5 {
             title = "You suck"
-        }else if difference < 10 {
+        } else if difference < 10 {
             title = "Sure"
         } else {
             title = "All right"
         }
+        
+        
         let message = "You scored \(points) points."
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        let action = UIAlertAction (title: "Close", style: .default, handler: nil)
+        let action = UIAlertAction (title: "Nice", style: .default, handler: {
+            action in
+            self.startNewRound()
+        })
         
         alert.addAction(action)
         
         present(alert, animated: true, completion: nil)
         
-        startNewRound()
         
+           // restartGame()
         
     }
     
@@ -78,7 +89,6 @@ class ViewController: UIViewController {
         targetValue = Int.random(in: 1...100)
         currentValue = 50
         slider.value = Float(currentValue)
-        
         updateLabels()
     }
     
@@ -89,12 +99,13 @@ class ViewController: UIViewController {
     }
     
     
-    @IBAction func restartGame() {
-        round = 0
-        score = 0
+   @IBAction func restartGame() {
+    
+    round = 0
+    score = 0
+    startNewRound()
         
-        
-    }
+}
 
 
 }
